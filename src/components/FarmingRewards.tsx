@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Trophy, 
@@ -63,7 +62,7 @@ const FarmingRewards: React.FC = () => {
     {
       id: '2',
       title: 'Discover new artists',
-      description: 'Listen to 3 artists you've never heard before',
+      description: 'Listen to 3 artists you\'ve never heard before',
       reward: 15,
       icon: <Music className="h-5 w-5" />,
       progress: 66,
