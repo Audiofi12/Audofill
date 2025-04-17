@@ -99,3 +99,25 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   @apply slider-thumb;
 }
+
+/* Responsive styles for small screens */
+@media (max-width: 640px) {
+  .audio-card {
+    @apply p-3;
+  }
+  
+  .chain-pill {
+    @apply px-1.5 py-0.5 text-[10px];
+  }
+}
+
+/* Fix for mobile Safari audio playback */
+audio {
+  display: none;
+}
+
+/* Ensure modals are visible on mobile */
+.fixed.inset-0 {
+  @apply z-50;
+}
+

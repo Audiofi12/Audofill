@@ -10,12 +10,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Link } from "react-router-dom";
 
 interface TrackCardProps {
   track: {
     id: string;
     title: string;
     artist: string;
+    artistId?: string;
     cover: string;
     plays: number;
     duration: string;
@@ -30,6 +33,7 @@ interface TrackCardProps {
       total: string;
       chains: { name: string; amount: string }[];
     };
+    audioUrl?: string;
   };
   index?: number;
   compact?: boolean;
@@ -59,6 +63,7 @@ const TrackCard: React.FC<TrackCardProps> = ({
     position: "0",
     share: "0%"
   });
+  const isMobile = useIsMobile();
 
   const handlePlay = () => {
     if (onPlay) {
@@ -151,12 +156,26 @@ const TrackCard: React.FC<TrackCardProps> = ({
             
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{track.title}</p>
-              <p className="text-xs text-gray-400 truncate">{track.artist}</p>
+              <p className="text-xs text-gray-400 truncate">
+                {track.artistId ? (
+                  <Link to={`/artist-view?id=${track.artistId}`} className="hover:text-primary">
+                    {track.artist}
+                  </Link>
+                ) : (
+                  track.artist
+                )}
+              </p>
             </div>
           </div>
         </div>
         
         <div className="flex items-center">
+          {track.genre && (
+            <Badge variant="outline" className="mr-2 text-xs hidden md:inline-flex">
+              {track.genre}
+            </Badge>
+          )}
+          
           <span className="text-xs text-gray-400 mr-4">{track.duration}</span>
           
           <DropdownMenu>
@@ -169,7 +188,11 @@ const TrackCard: React.FC<TrackCardProps> = ({
               <DropdownMenuItem onClick={handleAddToPlaylist}>Add to Playlist</DropdownMenuItem>
               <DropdownMenuItem onClick={handleOpenDetails}>View Details</DropdownMenuItem>
               <DropdownMenuItem onClick={handleShare}>Share</DropdownMenuItem>
-              <DropdownMenuItem>View Artist</DropdownMenuItem>
+              {track.artistId && (
+                <DropdownMenuItem asChild>
+                  <Link to={`/artist-view?id=${track.artistId}`}>View Artist</Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem>View NFT Details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -233,7 +256,15 @@ const TrackCard: React.FC<TrackCardProps> = ({
         <div className="flex justify-between items-start">
           <div>
             <h3 className="font-medium text-sm truncate">{track.title}</h3>
-            <p className="text-xs text-gray-400">{track.artist}</p>
+            <p className="text-xs text-gray-400">
+              {track.artistId ? (
+                <Link to={`/artist-view?id=${track.artistId}`} className="hover:text-primary">
+                  {track.artist}
+                </Link>
+              ) : (
+                track.artist
+              )}
+            </p>
           </div>
           
           <DropdownMenu>
@@ -249,7 +280,11 @@ const TrackCard: React.FC<TrackCardProps> = ({
               <DropdownMenuItem onClick={handleAddToPlaylist}>Add to Playlist</DropdownMenuItem>
               <DropdownMenuItem onClick={handleOpenDetails}>View Details</DropdownMenuItem>
               <DropdownMenuItem onClick={handleShare}>Share</DropdownMenuItem>
-              <DropdownMenuItem>View Artist</DropdownMenuItem>
+              {track.artistId && (
+                <DropdownMenuItem asChild>
+                  <Link to={`/artist-view?id=${track.artistId}`}>View Artist</Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem>View NFT Details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -275,7 +310,7 @@ const TrackCard: React.FC<TrackCardProps> = ({
       
       {/* Track details dialog with staking */}
       <Dialog open={showTrackDetails} onOpenChange={setShowTrackDetails}>
-        <DialogContent className="sm:max-w-2xl bg-background border-gray-800">
+        <DialogContent className={`sm:max-w-2xl bg-background border-gray-800 ${isMobile ? 'h-[90vh] overflow-y-auto' : ''}`}>
           <DialogHeader>
             <DialogTitle className="flex items-center">
               <div className="h-8 w-8 rounded overflow-hidden mr-2">

@@ -12,6 +12,10 @@ import Radio from "./pages/Radio";
 import ArtistView from "./pages/ArtistView";
 import NotFound from "./pages/NotFound";
 
+// Create a sample audio file for the music player
+const sampleAudio = new Audio('/sample-audio.mp3');
+sampleAudio.preload = 'auto';
+
 const queryClient = new QueryClient();
 
 const App = () => (
