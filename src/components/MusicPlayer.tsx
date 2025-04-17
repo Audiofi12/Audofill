@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Play, 
@@ -78,7 +77,6 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ currentTrack }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const waveformRef = useRef<HTMLDivElement>(null);
 
-  // This would normally use a real audio URL
   const audioSrc = currentTrack?.audioUrl || '';
 
   useEffect(() => {
@@ -154,7 +152,6 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ currentTrack }) => {
   };
 
   const handleStakeSubmit = () => {
-    // Simulate staking
     const amount = parseInt(stakeAmount);
     const newAmount = userStake.amount + amount;
     setUserStake({
@@ -168,7 +165,6 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ currentTrack }) => {
     setStakeAmount("100");
   };
 
-  // Create visual waveform animation
   useEffect(() => {
     if (waveformRef.current && isPlaying) {
       const container = waveformRef.current;
@@ -181,7 +177,6 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ currentTrack }) => {
     }
   }, [isPlaying, waveformRef]);
 
-  // Render audio visualization bars
   const renderWaveform = () => {
     return Array.from({ length: 9 }, (_, i) => (
       <div 
@@ -195,7 +190,6 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ currentTrack }) => {
     ));
   };
 
-  // Format large numbers
   const formatNumber = (num: number | undefined) => {
     if (!num) return 'N/A';
     return num.toLocaleString();
@@ -207,273 +201,267 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ currentTrack }) => {
         <audio ref={audioRef} src={audioSrc} preload="metadata" />
         
         <div className="flex items-center justify-between max-w-7xl mx-auto">
-          {/* Track Info */}
-          <div className="flex items-center space-x-3 w-1/4">
-            {currentTrack ? (
-              <>
-                <div className="relative h-12 w-12 rounded-md overflow-hidden">
-                  <img 
-                    src={currentTrack.cover || 'https://github.com/shadcn.png'} 
-                    alt={currentTrack.title} 
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-                  <div className="absolute bottom-1 right-1">
-                    <span className="chain-pill text-[10px] py-0.5">{currentTrack.chain}</span>
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{currentTrack.title}</p>
-                  <p className="text-xs text-gray-400 truncate">{currentTrack.artist}</p>
-                </div>
-              </>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <div className="h-12 w-12 rounded-md bg-muted flex items-center justify-center">
-                  <Music className="h-6 w-6 text-gray-500" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium">Select a track</p>
-                  <p className="text-xs text-gray-400">AudioFi Player</p>
+          {currentTrack ? (
+            <>
+              <div className="relative h-12 w-12 rounded-md overflow-hidden">
+                <img 
+                  src={currentTrack.cover || 'https://github.com/shadcn.png'} 
+                  alt={currentTrack.title} 
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+                <div className="absolute bottom-1 right-1">
+                  <span className="chain-pill text-[10px] py-0.5">{currentTrack.chain}</span>
                 </div>
               </div>
-            )}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium truncate">{currentTrack.title}</p>
+                <p className="text-xs text-gray-400 truncate">{currentTrack.artist}</p>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center space-x-2">
+              <div className="h-12 w-12 rounded-md bg-muted flex items-center justify-center">
+                <Music className="h-6 w-6 text-gray-500" />
+              </div>
+              <div>
+                <p className="text-sm font-medium">Select a track</p>
+                <p className="text-xs text-gray-400">AudioFi Player</p>
+              </div>
+            </div>
+          )}
+          
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className={`text-gray-400 hover:text-white ${isLiked ? 'text-primary' : ''}`}
+            onClick={() => setIsLiked(!isLiked)}
+          >
+            <Heart className={`h-5 w-5 ${isLiked ? 'fill-primary' : ''}`} />
+          </Button>
+        </div>
+        
+        <div className="flex flex-col items-center justify-center flex-1 max-w-xl px-4">
+          <div className="flex items-center space-x-4 mb-1">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                    <Shuffle className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Shuffle</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            
+            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+              <SkipBack className="h-5 w-5" />
+            </Button>
             
             <Button 
-              variant="ghost" 
+              onClick={handlePlayPause}
+              variant="outline" 
               size="icon" 
-              className={`text-gray-400 hover:text-white ${isLiked ? 'text-primary' : ''}`}
-              onClick={() => setIsLiked(!isLiked)}
+              className="rounded-full h-10 w-10 bg-primary text-white hover:bg-primary/90 border-0"
             >
-              <Heart className={`h-5 w-5 ${isLiked ? 'fill-primary' : ''}`} />
+              {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 ml-0.5" />}
             </Button>
-          </div>
-          
-          {/* Player Controls */}
-          <div className="flex flex-col items-center justify-center flex-1 max-w-xl px-4">
-            <div className="flex items-center space-x-4 mb-1">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                      <Shuffle className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Shuffle</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              
-              <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                <SkipBack className="h-5 w-5" />
-              </Button>
-              
-              <Button 
-                onClick={handlePlayPause}
-                variant="outline" 
-                size="icon" 
-                className="rounded-full h-10 w-10 bg-primary text-white hover:bg-primary/90 border-0"
-              >
-                {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 ml-0.5" />}
-              </Button>
-              
-              <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                <SkipForward className="h-5 w-5" />
-              </Button>
-              
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                      <Repeat className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Repeat</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
             
-            <div className="w-full flex items-center space-x-2">
-              <span className="text-xs text-gray-400 w-10 text-right">{formatTime(currentTime)}</span>
-              <div className="flex-1 group relative">
-                <Slider
-                  value={[currentTime]}
-                  min={0}
-                  max={duration || 100}
-                  step={0.1}
-                  onValueChange={handleSeek}
-                  className="cursor-pointer"
-                />
-                <div 
-                  ref={waveformRef}
-                  className="absolute left-0 right-0 -top-6 flex justify-center items-end h-6 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-                >
-                  {renderWaveform()}
-                </div>
-              </div>
-              <span className="text-xs text-gray-400 w-10">{formatTime(duration || 0)}</span>
-            </div>
-          </div>
-          
-          {/* Right Controls */}
-          <div className="flex items-center space-x-3 w-1/4 justify-end">
-            <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white" onClick={toggleMute}>
-                {isMuted ? (
-                  <VolumeX className="h-5 w-5" />
-                ) : volume > 0.5 ? (
-                  <Volume2 className="h-5 w-5" />
-                ) : (
-                  <Volume1 className="h-5 w-5" />
-                )}
-              </Button>
-              
-              <div className="w-20">
-                <Slider
-                  value={[isMuted ? 0 : volume]}
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  onValueChange={handleVolumeChange}
-                />
-              </div>
-            </div>
+            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+              <SkipForward className="h-5 w-5" />
+            </Button>
             
-            <div className="hidden md:flex items-center space-x-2">
-              <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                <Share2 className="h-5 w-5" />
-              </Button>
-              <Sheet>
-                <SheetTrigger asChild>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
                   <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
-                    <MoreHorizontal className="h-5 w-5" />
+                    <Repeat className="h-4 w-4" />
                   </Button>
-                </SheetTrigger>
-                <SheetContent className="bg-background border-gray-800 w-[400px] sm:max-w-none">
-                  <SheetHeader>
-                    <SheetTitle>Track Details</SheetTitle>
-                    <SheetDescription>View and stake on this track</SheetDescription>
-                  </SheetHeader>
-                  {currentTrack && (
-                    <div className="mt-6 space-y-6">
-                      <div className="flex items-center space-x-4">
-                        <img src={currentTrack.cover} alt={currentTrack.title} className="h-16 w-16 rounded-md object-cover" />
-                        <div>
-                          <h3 className="font-medium">{currentTrack.title}</h3>
-                          <p className="text-sm text-gray-400">{currentTrack.artist}</p>
-                          <div className="flex space-x-2 mt-1">
-                            <Badge variant="outline" className="text-xs">{currentTrack.chain}</Badge>
-                            {currentTrack.genre && <Badge variant="outline" className="text-xs">{currentTrack.genre}</Badge>}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-secondary rounded-lg p-3">
-                          <div className="text-xs text-gray-400 mb-1">Market Cap</div>
-                          <div className="flex items-center">
-                            <BarChart3 className="h-4 w-4 text-primary mr-1" />
-                            <span className="font-medium">{currentTrack.marketCap || 'N/A'}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="bg-secondary rounded-lg p-3">
-                          <div className="text-xs text-gray-400 mb-1">ROI (30d)</div>
-                          <div className="flex items-center">
-                            <TrendingUp className="h-4 w-4 text-green-400 mr-1" />
-                            <span className="font-medium text-green-400">{currentTrack.roi || 'N/A'}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="bg-secondary rounded-lg p-3">
-                          <div className="text-xs text-gray-400 mb-1">Total Stakers</div>
-                          <div className="flex items-center">
-                            <Users className="h-4 w-4 text-primary mr-1" />
-                            <span className="font-medium">{formatNumber(currentTrack.stakers)}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="bg-secondary rounded-lg p-3">
-                          <div className="text-xs text-gray-400 mb-1">Total Staked</div>
-                          <div className="flex items-center">
-                            <Coins className="h-4 w-4 text-primary mr-1" />
-                            <span className="font-medium">{currentTrack.totalStaked || 'N/A'}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="pt-4 border-t border-gray-800">
-                        <h4 className="font-medium mb-3">Your Position</h4>
-                        {userStake.amount > 0 ? (
-                          <div className="bg-secondary rounded-lg p-3 mb-4">
-                            <div className="grid grid-cols-2 gap-2 mb-2">
-                              <div>
-                                <div className="text-xs text-gray-400">Your Stake</div>
-                                <div className="text-sm font-medium">{userStake.position}</div>
-                              </div>
-                              <div>
-                                <div className="text-xs text-gray-400">Your ROI</div>
-                                <div className="text-sm font-medium text-green-400">{userStake.roi}</div>
-                              </div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-2">
-                              <div>
-                                <div className="text-xs text-gray-400">Earnings</div>
-                                <div className="text-sm font-medium">{userStake.earningsToDate}</div>
-                              </div>
-                              <div>
-                                <div className="text-xs text-gray-400">Share</div>
-                                <div className="text-sm font-medium">{userStake.share}</div>
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="bg-secondary/50 rounded-lg p-3 mb-4 text-center">
-                            <p className="text-gray-400 text-sm">No active stake on this track</p>
-                          </div>
-                        )}
-
-                        <div className="space-y-3">
-                          <div>
-                            <div className="flex justify-between mb-1">
-                              <div className="text-sm font-medium">Stake Amount (AFI)</div>
-                              <div className="text-xs text-gray-400">Balance: 2,500 AFI</div>
-                            </div>
-                            
-                            <div className="flex space-x-2">
-                              <Input
-                                type="number"
-                                value={stakeAmount}
-                                onChange={(e) => setStakeAmount(e.target.value)}
-                                className="bg-muted"
-                              />
-                              <Button variant="outline" size="sm" className="whitespace-nowrap" onClick={() => setStakeAmount("100")}>
-                                Min
-                              </Button>
-                              <Button variant="outline" size="sm" className="whitespace-nowrap" onClick={() => setStakeAmount("2500")}>
-                                Max
-                              </Button>
-                            </div>
-                          </div>
-                          
-                          <Button className="w-full" onClick={handleStakeSubmit}>
-                            <Coins className="mr-2 h-4 w-4" />
-                            Stake Tokens
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </SheetContent>
-              </Sheet>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Repeat</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+          
+          <div className="w-full flex items-center space-x-2">
+            <span className="text-xs text-gray-400 w-10 text-right">{formatTime(currentTime)}</span>
+            <div className="flex-1 group relative">
+              <Slider
+                value={[currentTime]}
+                min={0}
+                max={duration || 100}
+                step={0.1}
+                onValueChange={handleSeek}
+                className="cursor-pointer"
+              />
+              <div 
+                ref={waveformRef}
+                className="absolute left-0 right-0 -top-6 flex justify-center items-end h-6 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+              >
+                {renderWaveform()}
+              </div>
             </div>
+            <span className="text-xs text-gray-400 w-10">{formatTime(duration || 0)}</span>
           </div>
         </div>
         
-        {/* Expand button for mobile view */}
+        <div className="flex items-center space-x-3 w-1/4 justify-end">
+          <div className="flex items-center space-x-2">
+            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white" onClick={toggleMute}>
+              {isMuted ? (
+                <VolumeX className="h-5 w-5" />
+              ) : volume > 0.5 ? (
+                <Volume2 className="h-5 w-5" />
+              ) : (
+                <Volume1 className="h-5 w-5" />
+              )}
+            </Button>
+            
+            <div className="w-20">
+              <Slider
+                value={[isMuted ? 0 : volume]}
+                min={0}
+                max={1}
+                step={0.01}
+                onValueChange={handleVolumeChange}
+              />
+            </div>
+          </div>
+          
+          <div className="hidden md:flex items-center space-x-2">
+            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+              <Share2 className="h-5 w-5" />
+            </Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+                  <MoreHorizontal className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent className="bg-background border-gray-800 w-[400px] sm:max-w-none">
+                <SheetHeader>
+                  <SheetTitle>Track Details</SheetTitle>
+                  <SheetDescription>View and stake on this track</SheetDescription>
+                </SheetHeader>
+                {currentTrack && (
+                  <div className="mt-6 space-y-6">
+                    <div className="flex items-center space-x-4">
+                      <img src={currentTrack.cover} alt={currentTrack.title} className="h-16 w-16 rounded-md object-cover" />
+                      <div>
+                        <h3 className="font-medium">{currentTrack.title}</h3>
+                        <p className="text-sm text-gray-400">{currentTrack.artist}</p>
+                        <div className="flex space-x-2 mt-1">
+                          <Badge variant="outline" className="text-xs">{currentTrack.chain}</Badge>
+                          {currentTrack.genre && <Badge variant="outline" className="text-xs">{currentTrack.genre}</Badge>}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-secondary rounded-lg p-3">
+                        <div className="text-xs text-gray-400 mb-1">Market Cap</div>
+                        <div className="flex items-center">
+                          <BarChart3 className="h-4 w-4 text-primary mr-1" />
+                          <span className="font-medium">{currentTrack.marketCap || 'N/A'}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-secondary rounded-lg p-3">
+                        <div className="text-xs text-gray-400 mb-1">ROI (30d)</div>
+                        <div className="flex items-center">
+                          <TrendingUp className="h-4 w-4 text-green-400 mr-1" />
+                          <span className="font-medium text-green-400">{currentTrack.roi || 'N/A'}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-secondary rounded-lg p-3">
+                        <div className="text-xs text-gray-400 mb-1">Total Stakers</div>
+                        <div className="flex items-center">
+                          <Users className="h-4 w-4 text-primary mr-1" />
+                          <span className="font-medium">{formatNumber(currentTrack.stakers)}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-secondary rounded-lg p-3">
+                        <div className="text-xs text-gray-400 mb-1">Total Staked</div>
+                        <div className="flex items-center">
+                          <Coins className="h-4 w-4 text-primary mr-1" />
+                          <span className="font-medium">{currentTrack.totalStaked || 'N/A'}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-gray-800">
+                      <h4 className="font-medium mb-3">Your Position</h4>
+                      {userStake.amount > 0 ? (
+                        <div className="bg-secondary rounded-lg p-3 mb-4">
+                          <div className="grid grid-cols-2 gap-2 mb-2">
+                            <div>
+                              <div className="text-xs text-gray-400">Your Stake</div>
+                              <div className="text-sm font-medium">{userStake.position}</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-gray-400">Your ROI</div>
+                              <div className="text-sm font-medium text-green-400">{userStake.roi}</div>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div>
+                              <div className="text-xs text-gray-400">Earnings</div>
+                              <div className="text-sm font-medium">{userStake.earningsToDate}</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-gray-400">Share</div>
+                              <div className="text-sm font-medium">{userStake.share}</div>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="bg-secondary/50 rounded-lg p-3 mb-4 text-center">
+                          <p className="text-gray-400 text-sm">No active stake on this track</p>
+                        </div>
+                      )}
+
+                      <div className="space-y-3">
+                        <div>
+                          <div className="flex justify-between mb-1">
+                            <div className="text-sm font-medium">Stake Amount (AFI)</div>
+                            <div className="text-xs text-gray-400">Balance: 2,500 AFI</div>
+                          </div>
+                          
+                          <div className="flex space-x-2">
+                            <Input
+                              type="number"
+                              value={stakeAmount}
+                              onChange={(e) => setStakeAmount(e.target.value)}
+                              className="bg-muted"
+                            />
+                            <Button variant="outline" size="sm" className="whitespace-nowrap" onClick={() => setStakeAmount("100")}>
+                              Min
+                            </Button>
+                            <Button variant="outline" size="sm" className="whitespace-nowrap" onClick={() => setStakeAmount("2500")}>
+                              Max
+                            </Button>
+                          </div>
+                        </div>
+                        
+                        <Button className="w-full" onClick={handleStakeSubmit}>
+                          <Coins className="mr-2 h-4 w-4" />
+                          Stake Tokens
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+        
         <Button 
           variant="ghost" 
           size="sm" 
@@ -484,7 +472,6 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ currentTrack }) => {
         </Button>
       </div>
       
-      {/* Mobile drawer for expanded view */}
       <Drawer open={showFullPlayer} onOpenChange={setShowFullPlayer}>
         <DrawerContent className="bg-background border-t border-gray-800 max-h-[90vh]">
           <div className="px-4 py-6 max-w-md mx-auto">
