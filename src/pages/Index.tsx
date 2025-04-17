@@ -34,7 +34,8 @@ const Index = () => {
       marketCap: '$1.2M',
       stakers: 342,
       roi: '+18.5%',
-      totalStaked: '45,000 AFI'
+      totalStaked: '45,000 AFI',
+      audioUrl: '/audio/hip-hop-beat.mp3'
     },
     {
       id: '2',
@@ -49,7 +50,8 @@ const Index = () => {
       marketCap: '$850K',
       stakers: 215,
       roi: '+12.3%',
-      totalStaked: '28,000 AFI'
+      totalStaked: '28,000 AFI',
+      audioUrl: '/audio/ambient-piano.mp3'
     },
     {
       id: '3',
@@ -64,7 +66,8 @@ const Index = () => {
       marketCap: '$620K',
       stakers: 187,
       roi: '+9.7%',
-      totalStaked: '23,400 AFI'
+      totalStaked: '23,400 AFI',
+      audioUrl: '/audio/electronic-beat.mp3'
     },
     {
       id: '4',
@@ -79,7 +82,8 @@ const Index = () => {
       marketCap: '$520K',
       stakers: 134,
       roi: '+7.8%',
-      totalStaked: '19,300 AFI'
+      totalStaked: '19,300 AFI',
+      audioUrl: '/audio/reggae-loop.mp3'
     },
     {
       id: '5',
@@ -94,7 +98,8 @@ const Index = () => {
       marketCap: '$410K',
       stakers: 98,
       roi: '+6.2%',
-      totalStaked: '15,700 AFI'
+      totalStaked: '15,700 AFI',
+      audioUrl: '/audio/lofi-chill.mp3'
     },
     {
       id: '6',
@@ -109,7 +114,8 @@ const Index = () => {
       marketCap: '$380K',
       stakers: 87,
       roi: '+5.4%',
-      totalStaked: '12,800 AFI'
+      totalStaked: '12,800 AFI',
+      audioUrl: '/audio/trap-beat.mp3'
     },
     {
       id: '7',
@@ -124,7 +130,8 @@ const Index = () => {
       marketCap: '$325K',
       stakers: 76,
       roi: '+4.9%',
-      totalStaked: '11,500 AFI'
+      totalStaked: '11,500 AFI',
+      audioUrl: '/audio/rnb-groove.mp3'
     },
     {
       id: '8',
@@ -139,7 +146,8 @@ const Index = () => {
       marketCap: '$275K',
       stakers: 58,
       roi: '+3.8%',
-      totalStaked: '9,200 AFI'
+      totalStaked: '9,200 AFI',
+      audioUrl: '/audio/classical-strings.mp3'
     }
   ];
   
@@ -298,7 +306,6 @@ const Index = () => {
               </div>
             </TabsContent>
             
-            {/* Other tabs would filter the tracks by chain */}
             <TabsContent value="ethereum" className="mt-4">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                 {mockTracks
@@ -315,7 +322,53 @@ const Index = () => {
               </div>
             </TabsContent>
             
-            {/* Similar content for other chain tabs */}
+            <TabsContent value="polygon" className="mt-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {mockTracks
+                  .filter(track => track.chain === 'Polygon')
+                  .map((track) => (
+                    <TrackCard 
+                      key={track.id} 
+                      track={track}
+                      onPlay={handlePlayTrack}
+                      isPlaying={currentTrackId === track.id}
+                      isCurrentTrack={currentTrackId === track.id}
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="binance" className="mt-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {mockTracks
+                  .filter(track => track.chain === 'Binance')
+                  .map((track) => (
+                    <TrackCard 
+                      key={track.id} 
+                      track={track}
+                      onPlay={handlePlayTrack}
+                      isPlaying={currentTrackId === track.id}
+                      isCurrentTrack={currentTrackId === track.id}
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="nero" className="mt-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {mockTracks
+                  .filter(track => track.chain === 'Nero')
+                  .map((track) => (
+                    <TrackCard 
+                      key={track.id} 
+                      track={track}
+                      onPlay={handlePlayTrack}
+                      isPlaying={currentTrackId === track.id}
+                      isCurrentTrack={currentTrackId === track.id}
+                    />
+                  ))}
+              </div>
+            </TabsContent>
           </Tabs>
         </section>
         
@@ -435,7 +488,7 @@ const Index = () => {
           title: currentTrack?.title || '',
           artist: currentTrack?.artist || '',
           cover: currentTrack?.cover || '',
-          audioUrl: '/sample-audio.mp3', // In a real app, this would be the actual URL
+          audioUrl: currentTrack?.audioUrl || '/audio/hip-hop-beat.mp3',
           chain: currentTrack?.chain || '',
           genre: currentTrack?.genre || '',
           marketCap: currentTrack?.marketCap || '',

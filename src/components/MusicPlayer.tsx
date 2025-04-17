@@ -77,11 +77,24 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ currentTrack }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const waveformRef = useRef<HTMLDivElement>(null);
 
+  // Get the actual audio source
   const audioSrc = currentTrack?.audioUrl || '';
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
+    // Reset the audio when the track changes
+    if (audio.src !== audioSrc && audioSrc) {
+      audio.src = audioSrc;
+      audio.load();
+      if (isPlaying) {
+        audio.play().catch(error => {
+          console.error("Error playing audio:", error);
+          setIsPlaying(false);
+        });
+      }
+    }
 
     const updateTime = () => setCurrentTime(audio.currentTime);
     const handleLoadedMetadata = () => {
@@ -102,7 +115,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ currentTrack }) => {
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [currentTrack]);
+  }, [currentTrack, audioSrc, isPlaying]);
 
   useEffect(() => {
     if (audioRef.current) {
