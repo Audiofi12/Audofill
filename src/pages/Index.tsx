@@ -29,7 +29,12 @@ const Index = () => {
       plays: 127850,
       duration: '3:42',
       chain: 'Ethereum',
-      createdAt: '2023-04-10'
+      createdAt: '2023-04-10',
+      genre: 'Hip-Hop',
+      marketCap: '$1.2M',
+      stakers: 342,
+      roi: '+18.5%',
+      totalStaked: '45,000 AFI'
     },
     {
       id: '2',
@@ -38,8 +43,13 @@ const Index = () => {
       cover: 'https://images.unsplash.com/photo-1511379938547-c1f69419cd86?w=500&h=500&q=80',
       plays: 98432,
       duration: '4:15',
-      chain: 'Solana',
-      createdAt: '2023-04-12'
+      chain: 'Polygon',
+      createdAt: '2023-04-12',
+      genre: 'Instrumental',
+      marketCap: '$850K',
+      stakers: 215,
+      roi: '+12.3%',
+      totalStaked: '28,000 AFI'
     },
     {
       id: '3',
@@ -49,7 +59,12 @@ const Index = () => {
       plays: 76129,
       duration: '3:58',
       chain: 'Polygon',
-      createdAt: '2023-04-15'
+      createdAt: '2023-04-15',
+      genre: 'Electronic',
+      marketCap: '$620K',
+      stakers: 187,
+      roi: '+9.7%',
+      totalStaked: '23,400 AFI'
     },
     {
       id: '4',
@@ -59,7 +74,12 @@ const Index = () => {
       plays: 54398,
       duration: '3:21',
       chain: 'Binance',
-      createdAt: '2023-04-18'
+      createdAt: '2023-04-18',
+      genre: 'Reggae',
+      marketCap: '$520K',
+      stakers: 134,
+      roi: '+7.8%',
+      totalStaked: '19,300 AFI'
     },
     {
       id: '5',
@@ -69,7 +89,12 @@ const Index = () => {
       plays: 42167,
       duration: '5:03',
       chain: 'Nero',
-      createdAt: '2023-04-20'
+      createdAt: '2023-04-20',
+      genre: 'Lo-Fi',
+      marketCap: '$410K',
+      stakers: 98,
+      roi: '+6.2%',
+      totalStaked: '15,700 AFI'
     },
     {
       id: '6',
@@ -79,7 +104,12 @@ const Index = () => {
       plays: 31945,
       duration: '3:36',
       chain: 'Ethereum',
-      createdAt: '2023-04-22'
+      createdAt: '2023-04-22',
+      genre: 'Hip-Hop',
+      marketCap: '$380K',
+      stakers: 87,
+      roi: '+5.4%',
+      totalStaked: '12,800 AFI'
     },
     {
       id: '7',
@@ -89,7 +119,12 @@ const Index = () => {
       plays: 28762,
       duration: '4:27',
       chain: 'Polygon',
-      createdAt: '2023-04-24'
+      createdAt: '2023-04-24',
+      genre: 'R&B',
+      marketCap: '$325K',
+      stakers: 76,
+      roi: '+4.9%',
+      totalStaked: '11,500 AFI'
     },
     {
       id: '8',
@@ -98,8 +133,13 @@ const Index = () => {
       cover: 'https://images.unsplash.com/photo-1425342605259-25d80e320565?w=500&h=500&q=80',
       plays: 19543,
       duration: '3:52',
-      chain: 'Solana',
-      createdAt: '2023-04-26'
+      chain: 'Nero',
+      createdAt: '2023-04-26',
+      genre: 'Classical',
+      marketCap: '$275K',
+      stakers: 58,
+      roi: '+3.8%',
+      totalStaked: '9,200 AFI'
     }
   ];
   
@@ -202,10 +242,20 @@ const Index = () => {
                   <span className="text-sm">Supported chains:</span>
                   <div className="flex space-x-2">
                     <div className="px-2 py-1 bg-[#6c7ae0]/20 rounded-full text-xs">Ethereum</div>
-                    <div className="px-2 py-1 bg-[#14f195]/20 rounded-full text-xs">Solana</div>
                     <div className="px-2 py-1 bg-[#8247e5]/20 rounded-full text-xs">Polygon</div>
                     <div className="px-2 py-1 bg-[#f3ba2f]/20 rounded-full text-xs">Binance</div>
                     <div className="px-2 py-1 bg-[#ff6b6b]/20 rounded-full text-xs">Nero</div>
+                  </div>
+                </div>
+                <div className="flex items-center mt-4 space-x-2">
+                  <span className="text-sm">Music genres:</span>
+                  <div className="flex flex-wrap gap-2">
+                    <div className="px-2 py-1 bg-primary/20 rounded-full text-xs">Hip-Hop</div>
+                    <div className="px-2 py-1 bg-primary/20 rounded-full text-xs">Instrumental</div>
+                    <div className="px-2 py-1 bg-primary/20 rounded-full text-xs">Reggae</div>
+                    <div className="px-2 py-1 bg-primary/20 rounded-full text-xs">R&B</div>
+                    <div className="px-2 py-1 bg-primary/20 rounded-full text-xs">Electronic</div>
+                    <div className="px-2 py-1 bg-primary/20 rounded-full text-xs">Classical</div>
                   </div>
                 </div>
               </div>
@@ -229,7 +279,6 @@ const Index = () => {
             <TabsList className="bg-muted/40 p-1">
               <TabsTrigger value="all" className="text-sm">All Chains</TabsTrigger>
               <TabsTrigger value="ethereum" className="text-sm">Ethereum</TabsTrigger>
-              <TabsTrigger value="solana" className="text-sm">Solana</TabsTrigger>
               <TabsTrigger value="polygon" className="text-sm">Polygon</TabsTrigger>
               <TabsTrigger value="binance" className="text-sm">Binance</TabsTrigger>
               <TabsTrigger value="nero" className="text-sm">Nero</TabsTrigger>
@@ -277,8 +326,10 @@ const Index = () => {
               <h2 className="text-2xl font-bold mb-1">Featured Artists</h2>
               <p className="text-sm text-gray-400">Creators distributing across chains</p>
             </div>
-            <Button variant="ghost" size="sm" className="text-primary">
-              View All <ChevronRight className="ml-1 h-4 w-4" />
+            <Button variant="ghost" size="sm" className="text-primary" asChild>
+              <Link to="/artist-view">
+                View All <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
             </Button>
           </div>
           
@@ -367,8 +418,10 @@ const Index = () => {
               <p className="text-sm text-gray-400 mb-4">
                 Listen to curated streams featuring the best content from every chain. Discover new artists and earn rewards while you listen.
               </p>
-              <Button variant="outline">
-                Start Listening <Headphones className="ml-2 h-4 w-4" />
+              <Button variant="outline" asChild>
+                <Link to="/radio">
+                  Start Listening <Headphones className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
             </div>
           </div>
@@ -384,6 +437,11 @@ const Index = () => {
           cover: currentTrack?.cover || '',
           audioUrl: '/sample-audio.mp3', // In a real app, this would be the actual URL
           chain: currentTrack?.chain || '',
+          genre: currentTrack?.genre || '',
+          marketCap: currentTrack?.marketCap || '',
+          stakers: currentTrack?.stakers || 0,
+          roi: currentTrack?.roi || '',
+          totalStaked: currentTrack?.totalStaked || ''
         } : undefined}
       />
     </div>

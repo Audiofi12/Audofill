@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import ArtistDashboard from "./pages/ArtistDashboard";
 import AIDiscovery from "./pages/AIDiscovery";
 import ListenerFarming from "./pages/ListenerFarming";
+import Radio from "./pages/Radio";
+import ArtistView from "./pages/ArtistView";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,8 @@ const App = () => (
           <Route path="/artist-dashboard" element={<ArtistDashboard />} />
           <Route path="/ai-discovery" element={<AIDiscovery />} />
           <Route path="/listener-farming" element={<ListenerFarming />} />
+          <Route path="/radio" element={<Radio />} />
+          <Route path="/artist-view" element={<ArtistView />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
