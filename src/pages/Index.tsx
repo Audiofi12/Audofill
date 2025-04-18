@@ -35,13 +35,13 @@ const Index = () => {
       stakers: 342,
       roi: '+18.5%',
       totalStaked: '45,000 AFI',
-      audioUrl: '/audio/hip-hop-beat.mp3'
+      audioUrl: '/audio/t1.mp3'
     },
     {
       id: '2',
       title: 'NFT Dreams',
       artist: 'Digital Nomad',
-      cover: 'https://images.unsplash.com/photo-1511379938547-c1f69419cd86?w=500&h=500&q=80',
+      cover: '/nft.jpg',
       plays: 98432,
       duration: '4:15',
       chain: 'Polygon',
@@ -51,7 +51,7 @@ const Index = () => {
       stakers: 215,
       roi: '+12.3%',
       totalStaked: '28,000 AFI',
-      audioUrl: '/audio/ambient-piano.mp3'
+      audioUrl: '/audio/t2.mp3'
     },
     {
       id: '3',
@@ -67,7 +67,7 @@ const Index = () => {
       stakers: 187,
       roi: '+9.7%',
       totalStaked: '23,400 AFI',
-      audioUrl: '/audio/electronic-beat.mp3'
+      audioUrl: '/audio/t3.mp3'
     },
     {
       id: '4',
@@ -83,7 +83,7 @@ const Index = () => {
       stakers: 134,
       roi: '+7.8%',
       totalStaked: '19,300 AFI',
-      audioUrl: '/audio/reggae-loop.mp3'
+      audioUrl: '/audio/t4.mp3'
     },
     {
       id: '5',
@@ -99,7 +99,7 @@ const Index = () => {
       stakers: 98,
       roi: '+6.2%',
       totalStaked: '15,700 AFI',
-      audioUrl: '/audio/lofi-chill.mp3'
+      audioUrl: '/audio/tone.mp3'
     },
     {
       id: '6',
@@ -115,7 +115,7 @@ const Index = () => {
       stakers: 87,
       roi: '+5.4%',
       totalStaked: '12,800 AFI',
-      audioUrl: '/audio/trap-beat.mp3'
+      audioUrl: '/audio/t5.mp3'
     },
     {
       id: '7',
@@ -131,7 +131,7 @@ const Index = () => {
       stakers: 76,
       roi: '+4.9%',
       totalStaked: '11,500 AFI',
-      audioUrl: '/audio/rnb-groove.mp3'
+      audioUrl: '/audio/t6.mp3'
     },
     {
       id: '8',
@@ -147,7 +147,7 @@ const Index = () => {
       stakers: 58,
       roi: '+3.8%',
       totalStaked: '9,200 AFI',
-      audioUrl: '/audio/classical-strings.mp3'
+      audioUrl: '/audio/t7.mp3'
     }
   ];
   
@@ -155,7 +155,7 @@ const Index = () => {
     {
       id: '1',
       name: 'BlockBeats',
-      image: 'https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=400&h=400&q=80',
+      image: '/nft.jpg',
       followers: 24389,
       tracks: 32,
       verified: true,
@@ -182,7 +182,7 @@ const Index = () => {
     {
       id: '3',
       name: 'Cyber Symphony',
-      image: 'https://images.unsplash.com/photo-1566394723627-73716ce53fc7?w=400&h=400&q=80',
+      image: '/cyber.jpg',
       followers: 12543,
       tracks: 18,
       verified: false,

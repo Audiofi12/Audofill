@@ -87,7 +87,9 @@ const Navbar = () => {
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>AF</AvatarFallback>
             </Avatar>
-
+            <Button className="bg-blue-600 text-[13px]">
+              Connect Wallet
+            </Button>
             <div className="md:hidden">
               <Button
                 variant="ghost"
