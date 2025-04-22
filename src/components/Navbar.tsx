@@ -10,6 +10,7 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import AAWalletConnect from './AAWalletConnect';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,9 +88,10 @@ const Navbar = () => {
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>AF</AvatarFallback>
             </Avatar>
-            <Button className="bg-blue-600 text-[13px]">
+            {/* <Button className="bg-blue-600 text-[13px]">
               Connect Wallet
-            </Button>
+            </Button> */}
+            <AAWalletConnect />
             <div className="md:hidden">
               <Button
                 variant="ghost"
